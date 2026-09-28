@@ -1,0 +1,498 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ShopNest - E-Commerce</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        🛒 ShopNest
+    </div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#categories">Categories</a>
+    </nav>
+
+    <div class="nav-right">
+
+        <button id="loginBtn"
+                class="nav-btn"
+                onclick="openAuth('login')">
+            Login
+        </button>
+
+        <button class="cart-btn"
+                onclick="openCart()">
+            🛒 Cart
+            <span id="cartCount">0</span>
+        </button>
+
+        <button id="logoutBtn"
+                class="logout-btn"
+                onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <p class="small-title">
+            WELCOME TO SHOPNEST
+        </p>
+
+        <h1>
+            Find Everything<br>
+            You Need in One Place
+        </h1>
+
+        <p class="hero-text">
+            Discover quality products at great prices.
+            Shop easily, securely and conveniently.
+        </p>
+
+        <button class="primary-btn"
+                onclick="scrollToProducts()">
+            Explore Products →
+        </button>
+
+    </div>
+
+    <div class="hero-image">
+
+        <div class="hero-circle">
+            🛍️
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features">
+
+    <div class="feature">
+        <div class="feature-icon">🚚</div>
+
+        <div>
+            <h3>Fast Delivery</h3>
+            <p>Quick and reliable delivery</p>
+        </div>
+    </div>
+
+
+    <div class="feature">
+        <div class="feature-icon">🔒</div>
+
+        <div>
+            <h3>Secure Shopping</h3>
+            <p>Protected with JWT security</p>
+        </div>
+    </div>
+
+
+    <div class="feature">
+        <div class="feature-icon">💳</div>
+
+        <div>
+            <h3>Easy Shopping</h3>
+            <p>Simple and convenient</p>
+        </div>
+    </div>
+
+
+    <div class="feature">
+        <div class="feature-icon">⭐</div>
+
+        <div>
+            <h3>Quality Products</h3>
+            <p>Products you can trust</p>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<section class="categories-section"
+         id="categories">
+
+    <div class="section-heading">
+
+        <p>EXPLORE</p>
+
+        <h2>Shop by Category</h2>
+
+    </div>
+
+
+    <div class="categories">
+
+        <button class="category active"
+                onclick="filterCategory('All')">
+            🛍️
+            <span>All</span>
+        </button>
+
+        <button class="category"
+                onclick="filterCategory('Electronics')">
+            💻
+            <span>Electronics</span>
+        </button>
+
+        <button class="category"
+                onclick="filterCategory('Fashion')">
+            👕
+            <span>Fashion</span>
+        </button>
+
+        <button class="category"
+                onclick="filterCategory('Accessories')">
+            🎧
+            <span>Accessories</span>
+        </button>
+
+        <button class="category"
+                onclick="filterCategory('Home')">
+            🏠
+            <span>Home</span>
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PRODUCTS ================= -->
+
+<section class="products-section"
+         id="products">
+
+    <div class="products-top">
+
+        <div>
+
+            <p class="section-label">
+                OUR COLLECTION
+            </p>
+
+            <h2>Featured Products</h2>
+
+        </div>
+
+
+        <div class="search-box">
+
+            🔍
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search products..."
+                onkeyup="searchProducts()">
+
+        </div>
+
+    </div>
+
+
+    <div id="loading"
+         class="loading">
+        Loading products...
+    </div>
+
+
+    <!-- IMPORTANT: JS also uses this same ID -->
+    <div id="productsContainer"
+         class="products-grid">
+    </div>
+
+
+    <div id="noProducts"
+         class="no-products">
+        No products found.
+    </div>
+
+</section>
+
+
+<!-- ================= ADMIN PANEL ================= -->
+
+<section id="adminPanel"
+         class="admin-panel">
+
+    <div class="admin-heading">
+
+        <div>
+            <p>ADMIN AREA</p>
+            <h2>Manage Products</h2>
+        </div>
+
+        <span class="admin-badge">
+            ADMIN
+        </span>
+
+    </div>
+
+
+    <div class="admin-form">
+
+        <input
+            type="text"
+            id="adminProductName"
+            placeholder="Product name">
+
+        <input
+            type="number"
+            id="adminProductPrice"
+            placeholder="Price">
+
+        <input
+            type="text"
+            id="adminProductCategory"
+            placeholder="Category">
+
+        <button onclick="addProduct()"
+                class="primary-btn">
+            + Add Product
+        </button>
+
+    </div>
+
+
+    <p id="adminMessage"></p>
+
+</section>
+
+
+<!-- ================= CART MODAL ================= -->
+
+<div id="cartModal"
+     class="modal">
+
+    <div class="modal-content cart-content">
+
+        <div class="modal-header">
+
+            <h2>Your Cart 🛒</h2>
+
+            <button onclick="closeCart()"
+                    class="close-btn">
+                ×
+            </button>
+
+        </div>
+
+
+        <div id="cartItems">
+
+            <p class="empty-cart">
+                Your cart is empty.
+            </p>
+
+        </div>
+
+
+        <div class="cart-footer">
+
+            <div>
+
+                <span>Total</span>
+
+                <strong id="cartTotal">
+                    ₹0
+                </strong>
+
+            </div>
+
+            <button class="checkout-btn"
+                    onclick="checkout()">
+                Place Order
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= AUTH MODAL ================= -->
+
+<div id="authModal"
+     class="modal">
+
+    <div class="modal-content auth-content">
+
+        <button onclick="closeAuth()"
+                class="close-btn">
+            ×
+        </button>
+
+
+        <div class="auth-logo">
+            🛒 ShopNest
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <div id="loginForm">
+
+            <h2>Welcome Back!</h2>
+
+            <p class="auth-subtitle">
+                Login to continue shopping
+            </p>
+
+
+            <input
+                type="text"
+                id="loginUsername"
+                placeholder="Username">
+
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Password">
+
+
+            <button onclick="login()"
+                    class="auth-btn">
+                Login
+            </button>
+
+
+            <p id="loginMessage"
+               class="message">
+            </p>
+
+
+            <p class="switch-auth">
+
+                Don't have an account?
+
+                <span onclick="showRegister()">
+                    Register
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <div id="registerForm"
+             style="display:none;">
+
+            <h2>Create Account</h2>
+
+            <p class="auth-subtitle">
+                Join ShopNest today
+            </p>
+
+
+            <input
+                type="text"
+                id="registerUsername"
+                placeholder="Username">
+
+
+            <input
+                type="password"
+                id="registerPassword"
+                placeholder="Password">
+
+
+            <select id="registerRole">
+
+                <option value="USER">
+                    Customer
+                </option>
+
+                <option value="ADMIN">
+                    Admin
+                </option>
+
+            </select>
+
+
+            <button onclick="register()"
+                    class="auth-btn">
+                Create Account
+            </button>
+
+
+            <p id="registerMessage"
+               class="message">
+            </p>
+
+
+            <p class="switch-auth">
+
+                Already have an account?
+
+                <span onclick="showLogin()">
+                    Login
+                </span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        🛒 ShopNest
+    </div>
+
+    <p>
+        Simple E-Commerce Application
+        using Spring Boot, JWT & PostgreSQL
+    </p>
+
+    <p class="copyright">
+        © 2026 ShopNest. All rights reserved.
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
